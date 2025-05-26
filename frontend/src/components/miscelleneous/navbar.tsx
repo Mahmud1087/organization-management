@@ -1,5 +1,4 @@
-import { Bell, Building, LogOut, Search } from 'lucide-react';
-import { Input } from '../ui/input';
+import { Bell, Building, LogOut } from 'lucide-react';
 import MobileSidebar from './mobile-sidebar';
 import { Flex } from 'antd';
 import { useAuthContext } from '@/store/context';
@@ -9,17 +8,27 @@ import { ConfirmAction } from './confirm-action';
 
 const Navbar = () => {
   const [openDialog, setOpenDialog] = useState(false);
-  const { logout } = useAuthContext();
+  const { data: user, logout } = useAuthContext();
+
+  const now = new Date();
+  const greeting =
+    now.getHours() < 12
+      ? 'Good Morning'
+      : now.getHours() < 18
+        ? 'Good Afternoon'
+        : 'Good Evening';
+  const welcomeMessage = `${greeting} ${user?.firstName || 'User'}!`;
 
   return (
     <>
       <nav className='p-4 flex items-center justify-between border-b lg:px-8'>
         <aside className='relative w-44 lg:w-64'>
-          <Input
+          {/* <Input
             className='rounded-full bg-slate-50 placeholder:text-gray-400'
             placeholder='search...'
           />
-          <Search className='absolute top-1/2 -translate-y-1/2 right-4 size-5 text-gray-400' />
+          <Search className='absolute top-1/2 -translate-y-1/2 right-4 size-5 text-gray-400' /> */}
+          <p className='text-xl font-medium'>{welcomeMessage}</p>
         </aside>
         <section className='flex items-center gap-3'>
           <div>
