@@ -13,6 +13,7 @@ import SignUpPage from './pages/auth/sign-up';
 import SignInPage from './pages/auth/sign-in';
 import Authenticated from './layouts/protections/authenticated';
 import DashboardPage from './pages/dashboard';
+import StaffPage from './pages/dashboard/staff';
 
 const routes: RouteObject[] = [
   //   Auth
@@ -72,6 +73,10 @@ const routes: RouteObject[] = [
       {
         path: pageRoutes.DASHBOARD,
         element: <DashboardPage />,
+      },
+      {
+        path: pageRoutes.STAFF_PAGE,
+        element: <StaffPage />,
       },
     ],
   },
