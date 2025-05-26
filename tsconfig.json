@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "commonjs",
+    "outDir": "./backend",
+    "rootDir": "./backend",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./backend/types", "./node_modules/@types"]
+  },
+  "include": ["backend/**/*"],
+  "exclude": ["node_modules", "frontend", "**/*.test.ts"]
+}
