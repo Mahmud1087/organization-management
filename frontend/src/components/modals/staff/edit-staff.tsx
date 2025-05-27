@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -59,10 +58,7 @@ const EditStaff = () => {
     <Dialog open={modalState[EDIT_STAFF_MODAL]}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='border-b pb-2'>
-          <DialogTitle>Add Staff</DialogTitle>
-          <DialogDescription>
-            Fill in the details to add a new staff.
-          </DialogDescription>
+          <DialogTitle>Edit Staff</DialogTitle>
         </DialogHeader>
 
         <ScrollArea className='mt-1.5 h-[15rem]'>
@@ -233,7 +229,7 @@ const EditStaff = () => {
             Cancel
           </Button>
           <Button form='add-staff' className=''>
-            Add Staff
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

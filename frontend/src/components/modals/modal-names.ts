@@ -1,6 +1,9 @@
 export const ADD_STAFF_MODAL = 'addStaffModal';
 export const EDIT_STAFF_MODAL = 'editStaffModal';
 export const STAFF_DETAILS_MODAL = 'staffDetailsModal';
+export const ADD_DEPARTMENT_MODAL = 'addDepartmentModal';
+export const EDIT_DEPARTMENT_MODAL = 'editDepartmentModal';
+export const DEPARTMENT_DETAILS_MODAL = 'departmentDetailsModal';
 export const CONFIRM_ACTION__MODAL = 'confirmActionModal';
 export const DELETE_MODAL = 'deleteModal';
 export const SUCCESSFUL_MODAL = 'successfulModal';

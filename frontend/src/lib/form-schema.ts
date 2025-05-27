@@ -67,3 +67,13 @@ export const addStaffFormSchema = z.object({
       message: 'Department must be at least 2 characters.',
     }),
 });
+
+export const departmentFormSchema = z.object({
+  name: z
+    .string({
+      required_error: 'Department name is required.',
+    })
+    .min(2, {
+      message: 'Name must be at least 2 characters.',
+    }),
+});

@@ -1,7 +1,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -31,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Users } from 'lucide-react';
 
 const AddStaff = () => {
   const { modalState, closeModal } = useModalContext();
@@ -56,10 +56,10 @@ const AddStaff = () => {
     <Dialog open={modalState[ADD_STAFF_MODAL]}>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='border-b pb-2'>
-          <DialogTitle>Add Staff</DialogTitle>
-          <DialogDescription>
-            Fill in the details to add a new staff.
-          </DialogDescription>
+          <DialogTitle className='flex items-center gap-2'>
+            <Users />
+            <p>Add Staff</p>
+          </DialogTitle>
         </DialogHeader>
 
         <ScrollArea className='mt-1.5 h-[15rem]'>

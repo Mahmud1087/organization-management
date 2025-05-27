@@ -14,6 +14,7 @@ import SignInPage from './pages/auth/sign-in';
 import Authenticated from './layouts/protections/authenticated';
 import DashboardPage from './pages/dashboard';
 import StaffPage from './pages/dashboard/staff';
+import DepartmentPage from './pages/dashboard/department';
 
 const routes: RouteObject[] = [
   //   Auth
@@ -77,6 +78,10 @@ const routes: RouteObject[] = [
       {
         path: pageRoutes.STAFF_PAGE,
         element: <StaffPage />,
+      },
+      {
+        path: pageRoutes.DEPARTMENT_PAGE,
+        element: <DepartmentPage />,
       },
     ],
   },
