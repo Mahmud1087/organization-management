@@ -1,14 +1,27 @@
 import { Bell, Building, LogOut } from 'lucide-react';
 import MobileSidebar from './mobile-sidebar';
 import { Flex } from 'antd';
-import { useAuthContext } from '@/store/context';
+import { useAuthContext, useModalContext } from '@/store/context';
 import { Button } from '../ui/button';
-import { useState } from 'react';
 import { ConfirmAction } from './confirm-action';
+import { CONFIRM_ACTION__MODAL } from '../modals/modal-names';
 
 const Navbar = () => {
-  const [openDialog, setOpenDialog] = useState(false);
   const { data: user, logout } = useAuthContext();
+  const { openConfirmActionModal } = useModalContext();
+
+  const logoutUser = () => {
+    openConfirmActionModal(CONFIRM_ACTION__MODAL, {
+      title: 'Sign Out',
+      desc: 'Are you sure you want to logout?',
+      btnText: 'Logout',
+      successText: 'Logged out successfully!',
+      action: () => {
+        logout();
+      },
+      variant: 'destructive',
+    });
+  };
 
   const now = new Date();
   const greeting =
@@ -49,7 +62,7 @@ const Navbar = () => {
           <aside className='hidden border-r h-6 lg:block' />
           <Button
             variant={'destructive'}
-            onClick={() => setOpenDialog(true)}
+            onClick={() => logoutUser()}
             className='hidden md:block'
           >
             <LogOut />
@@ -60,15 +73,7 @@ const Navbar = () => {
         </section>
       </nav>
 
-      <ConfirmAction
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        title='Logout'
-        desc='Are you sure you want to logout?'
-        action={logout}
-        variant={'destructive'}
-        btnText={'Logout'}
-      />
+      <ConfirmAction />
     </>
   );
 };

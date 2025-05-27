@@ -1,0 +1,1 @@
+export { useModalContext } from './context';

@@ -1,4 +1,4 @@
-import Staff from '@/container/dashboard/staff';
+import Staff from '@/components/dashboard/staff';
 import Title from '@/utils/title';
 
 const StaffPage = () => {

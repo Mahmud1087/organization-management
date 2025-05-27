@@ -7,58 +7,42 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useModalContext } from '@/store/context';
 import { Loader } from 'lucide-react';
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useState } from 'react';
+import { CONFIRM_ACTION__MODAL } from '../modals/modal-names';
+import { toast } from 'sonner';
 
-interface Props {
-  openDialog: boolean;
-  title: string;
-  desc: string;
-  setOpenDialog: Dispatch<SetStateAction<boolean>>;
-  action: () => void;
-  variant?:
-    | 'default'
-    | 'link'
-    | 'destructive'
-    | 'outline'
-    | 'secondary'
-    | 'ghost'
-    | null
-    | undefined;
-  btnText?: string;
-}
-
-export function ConfirmAction({
-  openDialog,
-  title,
-  desc,
-  setOpenDialog,
-  action,
-  variant = 'default',
-  btnText = 'Confirm',
-}: Props) {
+export function ConfirmAction() {
   const [loading, setLoading] = useState(false);
+  const { confirmActionModalState, closeConfirmActionModal } =
+    useModalContext();
+  const modalData = confirmActionModalState[CONFIRM_ACTION__MODAL] || {};
+  const { isOpen, payload } = modalData;
+  const { desc, successText, title, action, btnText, variant } = payload || {};
 
   const confirm = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      action();
+      action!();
+      closeConfirmActionModal(CONFIRM_ACTION__MODAL);
+      toast.success(successText || 'Action completed successfully!');
     }, 3000);
   };
 
   return (
-    <Dialog open={openDialog}>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
+    <Dialog open={isOpen}>
+      <DialogContent className='sm:max-w-[425px] flex flex-col gap-7'>
+        <DialogHeader className='flex flex-col gap-3.5'>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{desc}</DialogDescription>
+          <DialogDescription className='text-base'>{desc}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button
             disabled={loading}
-            variant={'secondary'}
-            onClick={() => setOpenDialog(false)}
+            variant={'outline'}
+            onClick={() => closeConfirmActionModal(CONFIRM_ACTION__MODAL)}
           >
             Cancel
           </Button>

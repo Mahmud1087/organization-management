@@ -130,11 +130,11 @@ button {
 }
 
 .table-item {
-  @apply text-[13px] font-normal;
+  @apply text-sm font-normal;
 }
 
 .table-title {
-  @apply text-xs font-semibold text-[#6B7772];
+  @apply text-sm font-semibold text-[#6B7772];
 }
 
 .floating-circle {
