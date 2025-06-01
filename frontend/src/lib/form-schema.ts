@@ -77,3 +77,13 @@ export const departmentFormSchema = z.object({
       message: 'Name must be at least 2 characters.',
     }),
 });
+
+export const rejectLeaveFormSchema = z.object({
+  reason: z
+    .string({
+      required_error: 'Field cannot be empty.',
+    })
+    .min(8, {
+      message: 'Reason must be at least 8 characters.',
+    }),
+});

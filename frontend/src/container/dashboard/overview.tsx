@@ -22,6 +22,7 @@ const Overview = () => {
 
 const OwnerAdmin = () => {
   const { leaveReqColumns, leaveReqData } = useLeaveReqData();
+  const pendingReq = leaveReqData.filter((req) => req.status === 'pending');
 
   return (
     <div>
@@ -43,7 +44,7 @@ const OwnerAdmin = () => {
         </h1>
 
         <Table
-          t_data={leaveReqData}
+          t_data={pendingReq}
           columns={leaveReqColumns}
           tableCellClass='px-3 md:px-8 py-4 font-inter last:border-b-0'
           tableHeaderClass='bg-[#f7f7f7] text-[#6B7772] py-4 font-inter px-3 md:px-8'

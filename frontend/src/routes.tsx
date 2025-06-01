@@ -15,6 +15,7 @@ import Authenticated from './layouts/protections/authenticated';
 import DashboardPage from './pages/dashboard';
 import StaffPage from './pages/dashboard/staff';
 import DepartmentPage from './pages/dashboard/department';
+import LeaveRequestsPage from './pages/dashboard/leave-requests';
 
 const routes: RouteObject[] = [
   //   Auth
@@ -82,6 +83,10 @@ const routes: RouteObject[] = [
       {
         path: pageRoutes.DEPARTMENT_PAGE,
         element: <DepartmentPage />,
+      },
+      {
+        path: pageRoutes.LEAVE_REQUEST_PAGE,
+        element: <LeaveRequestsPage />,
       },
     ],
   },
