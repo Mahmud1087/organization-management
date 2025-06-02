@@ -115,7 +115,7 @@ const Table = ({
           {table.getHeaderGroups().map((headerGroup) => (
             <tr
               key={headerGroup.id}
-              className='w-full flex justify-between items-center md:overflow-hidden'
+              className='w-full flex justify-between items-center lg:overflow-hidden'
             >
               {virtualPaddingLeft ? (
                 <th style={{ display: 'flex', width: virtualPaddingLeft }} />

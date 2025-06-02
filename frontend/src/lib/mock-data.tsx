@@ -39,7 +39,7 @@ export const sideNavLists = [
   },
   {
     id: 1,
-    name: 'Leave Requests',
+    name: 'Requests',
     icon: <FileStack className='size-5 md:size-6' />,
     href: LEAVE_REQUEST_PAGE,
     canView: [ROLES.Owner, ROLES.Admin, ROLES.Manager, ROLES.Employee],

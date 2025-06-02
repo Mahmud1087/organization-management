@@ -87,3 +87,47 @@ export const rejectLeaveFormSchema = z.object({
       message: 'Reason must be at least 8 characters.',
     }),
 });
+
+export const profileFormSchema = z.object({
+  firstName: z.string().min(2, {
+    message: 'Firstname must be at least 2 characters.',
+  }),
+  lastName: z.string().min(2, {
+    message: 'Lastname must be at least 2 characters.',
+  }),
+  phoneNumber: z.string().refine((val) => {
+    const cleaned = val.replace(/\s+/g, '');
+    return /^0\d{10}$/.test(cleaned) || /^(\+234|234)?0\d{10}$/.test(cleaned);
+  }),
+  email: z.string().email({
+    message: 'Invalid email address.',
+  }),
+
+  address: z.string(),
+});
+
+export const securityFormSchema = z.object({
+  oldPassword: z.string().min(1, {
+    message: 'Password cannot be empty.',
+  }),
+  newPassword: z.string().min(1, {
+    message: 'Password cannot be empty.',
+  }),
+  confirmPassword: z.string().min(1, {
+    message: 'Password cannot be empty.',
+  }),
+});
+
+export const orgSettingsFormSchema = z.object({
+  orgName: z.string(),
+  sector: z.string(),
+  phoneNumber: z.string().refine((val) => {
+    const cleaned = val.replace(/\s+/g, '');
+    return /^0\d{10}$/.test(cleaned) || /^(\+234|234)?0\d{10}$/.test(cleaned);
+  }),
+  officeEmail: z.string().email({
+    message: 'Invalid email address.',
+  }),
+
+  officeAddress: z.string(),
+});

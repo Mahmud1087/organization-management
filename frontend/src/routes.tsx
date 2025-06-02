@@ -16,6 +16,7 @@ import DashboardPage from './pages/dashboard';
 import StaffPage from './pages/dashboard/staff';
 import DepartmentPage from './pages/dashboard/department';
 import LeaveRequestsPage from './pages/dashboard/leave-requests';
+import SettingsPage from './pages/dashboard/settings';
 
 const routes: RouteObject[] = [
   //   Auth
@@ -87,6 +88,10 @@ const routes: RouteObject[] = [
       {
         path: pageRoutes.LEAVE_REQUEST_PAGE,
         element: <LeaveRequestsPage />,
+      },
+      {
+        path: pageRoutes.SETTINGS_PAGE,
+        element: <SettingsPage />,
       },
     ],
   },
