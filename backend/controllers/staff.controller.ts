@@ -302,6 +302,23 @@ export const get_staff_by_orgId = async (
 ) => {
   const { orgId } = req.params;
 
+  if (!orgId || orgId === ':orgId') {
+    res
+      .status(400)
+      .json({ succes: false, message: 'Invalid organization ID', data: null });
+  }
+
+  // Validate ObjectId format
+  if (!mongoose.Types.ObjectId.isValid(orgId)) {
+    res
+      .status(400)
+      .json({
+        success: false,
+        message: 'Invalid organization ID format',
+        data: null,
+      });
+  }
+
   // Get pagination parameters from query
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;

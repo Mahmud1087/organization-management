@@ -6,9 +6,9 @@ import type { AxiosRequestHeaders } from 'axios';
 
 export function useFetchData<T>(
   url: string,
+  enabled?: boolean,
   limit?: number,
-  offset?: number,
-  enabled?: boolean
+  offset?: number
 ) {
   const query = useQuery<ResponseType<T>>({
     queryKey: [`${url}?limit=${limit}&offset=${offset}`],

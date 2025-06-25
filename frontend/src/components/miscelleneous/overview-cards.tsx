@@ -12,35 +12,85 @@ import { Card } from '../ui/card';
 import { ROLES } from '@/config/constants';
 import { cn } from '@/lib/utils';
 import { useAuthContext } from '@/store/context';
+import { useFetchData, useFetchSingleData } from '@/store/queries/common';
+import type {
+  DeptReturnType,
+  LeaveReturnType,
+  StaffResultType,
+  StaffReturnType,
+} from '@/types/dashboard';
+import { STAFF_API_URL } from '@/actions/services/api-urls';
+import type {
+  OwnerAdminAuthDataReturnType,
+  StaffAuthDataReturnType,
+} from '@/types';
+import Loader from './skeleton-loader';
 
 const OverviewCards = () => {
   const { data: user } = useAuthContext();
+  const owner = user as OwnerAdminAuthDataReturnType;
+  const staff = user as StaffAuthDataReturnType;
+  const { data: staffByOrg, isLoading: loadingStaffByOrg } =
+    useFetchData<StaffReturnType>(
+      `${STAFF_API_URL}org/${owner?.orgId}`,
+      user?.role === ROLES.Admin || user?.role === ROLES.Owner
+    );
+  const { data: staffByDept, isLoading: loadingStaffByDept } =
+    useFetchData<StaffReturnType>(
+      `${STAFF_API_URL}dept/${staff?.departmentId}`,
+      user?.role === ROLES.Manager
+    );
+  const { data: staffById, isLoading: loadingStaffById } =
+    useFetchSingleData<StaffResultType>(
+      `${STAFF_API_URL}${staff?.id}`,
+      user?.role === ROLES.Manager || user?.role === ROLES.Employee
+    );
+  const { data: deptByOrg, isLoading: loadingDeptByOrg } =
+    useFetchData<DeptReturnType>(
+      `${STAFF_API_URL}${owner?.orgId}`,
+      user?.role === ROLES.Admin || user?.role === ROLES.Owner
+    );
+  const { data: leaveById, isLoading: loadingLeaveById } =
+    useFetchData<LeaveReturnType>(
+      `${STAFF_API_URL}${staff?.id}`,
+      user?.role === ROLES.Employee
+    );
 
   const cardData = [
     {
       title: 'Total Staff',
       icon: <ChartNoAxesColumnDecreasing className='size-5' />,
-      value: 55,
+      value: staffByOrg?.data.pagination.total,
       canView: [ROLES.Admin, ROLES.Owner],
     },
     {
       title: 'No. of Managers',
       icon: <User className='size-5' />,
-      value: 5,
+      value: staffByOrg?.data.result.filter((s) => s.role === ROLES.Manager)
+        .length,
       canView: [ROLES.Admin, ROLES.Owner],
       bg: '',
     },
     {
       title: 'No. of Employees',
       icon: <Users2 className='size-5' />,
-      value: 12,
-      canView: [ROLES.Admin, ROLES.Owner, ROLES.Manager],
+      value: staffByOrg?.data.result.filter((s) => s.role === ROLES.Employee)
+        .length,
+      canView: [ROLES.Admin, ROLES.Owner],
+      bg: '',
+    },
+    {
+      title: 'No. of Employees',
+      icon: <Users2 className='size-5' />,
+      value: staffByDept?.data.result.filter((s) => s.role === ROLES.Employee)
+        .length,
+      canView: [ROLES.Manager],
       bg: '',
     },
     {
       title: 'Departments',
       icon: <Building2 className='size-5' />,
-      value: 5,
+      value: deptByOrg?.data.pagination.total,
       canView: [ROLES.Admin, ROLES.Owner],
       bg: '',
     },
@@ -53,14 +103,14 @@ const OverviewCards = () => {
     {
       title: 'Total yearly leave',
       icon: <FileStack className='size-5' />,
-      value: 5,
+      value: staffById?.data.leaveBalance,
       canView: [ROLES.Employee, ROLES.Manager],
       bg: '',
     },
     {
       title: 'Leaves taken this year',
       icon: <FileCheck2 className='size-5' />,
-      value: 5,
+      value: staffById?.data.totalLeavesTaken,
       canView: [ROLES.Employee, ROLES.Manager],
       bg: 'success',
     },
@@ -74,7 +124,8 @@ const OverviewCards = () => {
     {
       title: 'Pending Leave',
       icon: <FileClock className='size-5' />,
-      value: 5,
+      value: leaveById?.data.result.filter((l) => l.status === 'pending')
+        .length,
       canView: [ROLES.Employee],
       bg: 'pending',
     },
@@ -113,15 +164,15 @@ const OverviewCards = () => {
                     {title}
                   </h3>
                   <h2 className='group-first:text-white text-xl font-bold text-gray-600'>
-                    {/* {loadingCards ||
-                    loadingDrivers ||
-                    loadingFleets ||
-                    loadingWallet ? (
-                      <LoadingOutlined />
+                    {loadingStaffByDept ||
+                    loadingStaffByOrg ||
+                    loadingDeptByOrg ||
+                    loadingLeaveById ||
+                    loadingStaffById ? (
+                      <Loader />
                     ) : (
                       value
-                    )} */}
-                    {value}
+                    )}
                   </h2>
                 </Flex>
               </Flex>
