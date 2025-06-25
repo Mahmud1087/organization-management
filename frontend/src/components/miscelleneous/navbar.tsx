@@ -5,6 +5,10 @@ import { useAuthContext, useModalContext } from '@/store/context';
 import { Button } from '../ui/button';
 import { ConfirmAction } from './confirm-action';
 import { CONFIRM_ACTION__MODAL } from '../modals/modal-names';
+import { useFetchSingleData } from '@/store/queries/common';
+import { COMPANY_API_URL } from '@/actions/services/api-urls';
+import type { OrganizationReturnType } from '@/types/dashboard';
+import Loader from './skeleton-loader';
 
 const Navbar = () => {
   const { data: user, logout } = useAuthContext();
@@ -22,6 +26,11 @@ const Navbar = () => {
       variant: 'destructive',
     });
   };
+
+  const { data: org, isLoading: loadingOrg } =
+    useFetchSingleData<OrganizationReturnType>(
+      `${COMPANY_API_URL}${user?.orgId}`
+    );
 
   const now = new Date();
   const greeting =
@@ -55,7 +64,7 @@ const Navbar = () => {
             </div>
             <Flex vertical>
               <span className='text-sm font-medium hidden md:block'>
-                Organization Name
+                {loadingOrg ? <Loader /> : org?.data.orgName}
               </span>
             </Flex>
           </aside>

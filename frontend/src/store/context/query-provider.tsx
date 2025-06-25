@@ -9,6 +9,8 @@ import React from 'react';
 import { useAuthContext } from './auth/context';
 import { handleAllErrors } from '@/utils/errors';
 import { toast } from 'sonner';
+import { USER_DATA_KEY } from '@/config/app';
+import axios from 'axios';
 
 function getErrorTitle(error: string | number): string {
   switch (error) {
@@ -52,6 +54,18 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
       }),
       defaultOptions: {
         queries: {
+          queryFn: async ({ queryKey }) => {
+            const token = localStorage.getItem(USER_DATA_KEY) || 'null';
+
+            if (!token) {
+              throw new Error('Unauthenticated');
+            }
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const res = await axios.get(
+              `${import.meta.env.VITE_API_URL}${queryKey}`
+            );
+            return res.data;
+          },
           refetchOnMount: true,
           // refetchOnReconnect: false,
           refetchOnWindowFocus: false,

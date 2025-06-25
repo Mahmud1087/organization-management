@@ -1,4 +1,4 @@
-import { loginAPI } from '@/actions/apis/auth';
+import { loginAPI } from '@/actions/apis-requests';
 import { USER_DATA, USER_DATA_KEY } from '@/config/app';
 import { useLocalStorage } from '@/hooks';
 import type {

@@ -38,14 +38,14 @@ export const sideNavLists = [
     canView: [ROLES.Owner, ROLES.Admin],
   },
   {
-    id: 1,
+    id: 4,
     name: 'Requests',
     icon: <FileStack className='size-5 md:size-6' />,
     href: LEAVE_REQUEST_PAGE,
     canView: [ROLES.Owner, ROLES.Admin, ROLES.Manager, ROLES.Employee],
   },
   {
-    id: 1,
+    id: 5,
     name: 'Settings',
     icon: <Settings2 className='size-5 md:size-6' />,
     href: SETTINGS_PAGE,
