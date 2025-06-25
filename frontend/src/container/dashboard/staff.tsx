@@ -4,27 +4,27 @@ import { StaffDetails } from '@/components/modals/staff/staff-details';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Table from '@/components/ui/tables/table';
-import { ROLES } from '@/config/constants';
+// import { ROLES } from '@/config/constants';
 import { useStaffData } from '@/data/staff-data';
 import { useDebounce } from '@/hooks';
-import { useAuthContext } from '@/store/context';
+// import { useAuthContext } from '@/store/context';
 import { Dropdown, Flex, type MenuProps } from 'antd';
 import { ListFilter, Search } from 'lucide-react';
 import { useState } from 'react';
 
 const StaffContainer = () => {
-  const { data: user } = useAuthContext();
+  // const { data: user } = useAuthContext();
 
   return (
     <div>
       <StaffDetails />
       <EditStaff />
       <ConfirmAction />
-      {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? (
-        <OwnerAdmin />
-      ) : (
-        <Staff />
-      )}
+      {/* {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? ( */}
+      <OwnerAdmin />
+      {/* ) : ( */}
+      {/* <Staff /> */}
+      {/* )} */}
     </div>
   );
 };
@@ -131,8 +131,8 @@ const OwnerAdmin = () => {
   );
 };
 
-const Staff = () => {
-  return <div>Staff</div>;
-};
+// const Staff = () => {
+//   return <div>Staff</div>;
+// };
 
 export default StaffContainer;

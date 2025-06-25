@@ -3,10 +3,12 @@ import {
   EDIT_STAFF_MODAL,
   STAFF_DETAILS_MODAL,
 } from '@/components/modals/modal-names';
-import { useModalContext } from '@/store/context';
+import { ROLES } from '@/config/constants';
+import { cn } from '@/lib/utils';
+import { useAuthContext, useModalContext } from '@/store/context';
 import { MoreOutlined } from '@ant-design/icons';
 import type { ColumnDef } from '@tanstack/react-table';
-import { Dropdown, type MenuProps } from 'antd';
+import { Flex, Popover } from 'antd';
 
 interface StaffType {
   id: number;
@@ -24,6 +26,8 @@ interface StaffType {
 }
 export const useStaffData = () => {
   const { setTableRow, openModal, openConfirmActionModal } = useModalContext();
+  const { data: user } = useAuthContext();
+  const isManagement = user?.role === ROLES.Admin || user?.role === ROLES.Admin;
 
   const deleteStaff = () => {
     openConfirmActionModal(CONFIRM_ACTION__MODAL, {
@@ -124,25 +128,57 @@ export const useStaffData = () => {
     {
       header: () => <p className='table-title font-semibold'>FULL NAME</p>,
       accessorKey: 'fullName',
-      size: 200,
+      size: isManagement ? 200 : 300,
       cell: ({ row }) => (
         <div className='table-item text-black'>{row.original.fullName}</div>
       ),
     },
     {
-      header: () => <p className='table-title font-semibold'>ROLE</p>,
+      header: () => (
+        <p
+          className={cn(
+            'table-title font-semibold'
+            // isManagement ? 'block' : 'hidden'
+          )}
+        >
+          ROLE
+        </p>
+      ),
       accessorKey: 'role',
       size: 200,
       cell: ({ row }) => (
-        <p className='table-item text-[#6B7772]'>{row.original.role}</p>
+        <p
+          className={cn(
+            'table-item text-[#6B7772]'
+            // isManagement ? 'block' : 'hidden'
+          )}
+        >
+          {row.original.role}
+        </p>
       ),
     },
     {
-      header: () => <p className='table-title font-semibold'>DEPT</p>,
+      header: () => (
+        <p
+          className={cn(
+            'table-title font-semibold',
+            isManagement ? 'block' : 'hidden'
+          )}
+        >
+          DEPT
+        </p>
+      ),
       accessorKey: 'dept',
       size: 160,
       cell: ({ row }) => (
-        <p className='table-item text-black font-medium'>{row.original.dept}</p>
+        <p
+          className={cn(
+            'table-item text-black font-medium',
+            isManagement ? 'block' : 'hidden'
+          )}
+        >
+          {row.original.dept}
+        </p>
       ),
     },
 
@@ -163,61 +199,50 @@ export const useStaffData = () => {
       cell: ({ row }) => {
         // const status = row.original.status;
 
-        const items: MenuProps['items'] = [
-          {
-            label: (
-              <p
-                onClick={() => {
-                  setTableRow(row.original.id);
-                  openModal(STAFF_DETAILS_MODAL);
-                }}
-                className='text-xs font-medium my-1 w-28'
-              >
-                View Details
-              </p>
-            ),
-            key: '0',
-          },
-          {
-            label: (
+        const content = (
+          <Flex vertical gap={5}>
+            <p
+              onClick={() => {
+                setTableRow(row.original.id);
+                openModal(STAFF_DETAILS_MODAL);
+              }}
+              className='text-xs font-medium py-1.5 transition-all px-2.5 hover:bg-gray-200 hover:rounded cursor-pointer w-28'
+            >
+              View Details
+            </p>
+
+            {isManagement && (
               <p
                 onClick={() => {
                   setTableRow(row.original.id);
                   openModal(EDIT_STAFF_MODAL);
                 }}
-                className='text-xs my-1 font-medium text-primary'
+                className='text-xs py-1.5 transition-all px-2.5 hover:bg-gray-200 hover:rounded cursor-pointer font-medium text-primary'
               >
                 Edit Staff
               </p>
-            ),
-            key: '1',
-          },
-          {
-            label: (
+            )}
+
+            {isManagement && (
               <p
                 onClick={() => {
                   setTableRow(row.original.id);
                   deleteStaff();
                 }}
-                className='text-xs my-1 font-medium text-red-500'
+                className='text-xs py-1.5 transition-all px-2.5 hover:bg-gray-200 hover:rounded cursor-pointer font-medium text-red-500'
               >
                 Delete Staff
               </p>
-            ),
-            key: '2',
-          },
-        ].filter(Boolean);
+            )}
+          </Flex>
+        );
 
         return (
-          <Dropdown
-            menu={{ items }}
-            trigger={['click']}
-            placement='bottomRight'
-          >
+          <Popover trigger={'click'} placement='bottomRight' content={content}>
             <p className='text-[#6B7772] text-end w-full'>
               <MoreOutlined className='cursor-pointer text-lg' />
             </p>
-          </Dropdown>
+          </Popover>
         );
       },
     },
