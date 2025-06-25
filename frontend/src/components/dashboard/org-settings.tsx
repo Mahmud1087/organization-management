@@ -17,14 +17,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 
 const OrgSettings = () => {
-  const [canEdit, setCanEdit] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const form = useForm<z.infer<typeof orgSettingsFormSchema>>({
     resolver: zodResolver(orgSettingsFormSchema),
     defaultValues: {
       orgName: '',
       sector: '',
-      officeEmail: '',
+      officeEmail: 'hacknest@gmail.com',
       phoneNumber: '',
       officeAddress: '',
     },
@@ -32,7 +32,7 @@ const OrgSettings = () => {
 
   function onSubmit(values: z.infer<typeof orgSettingsFormSchema>) {
     console.log(values);
-    setCanEdit(false);
+    setIsDisabled(true);
   }
 
   return (
@@ -45,14 +45,15 @@ const OrgSettings = () => {
         <Button
           className='absolute -top-14 right-0 bg-black text-white hover:bg-black/55 hover:text-white lg:-top-20'
           variant={'outline'}
-          onClick={() => setCanEdit(true)}
+          type='button'
+          onClick={() => setIsDisabled(false)}
         >
           Edit Details
         </Button>
 
         <FormField
           control={form.control}
-          disabled={!canEdit}
+          disabled={isDisabled}
           name='orgName'
           render={({ field }) => (
             <FormItem>
@@ -71,7 +72,7 @@ const OrgSettings = () => {
         <FormField
           control={form.control}
           name='sector'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Sector</FormLabel>
@@ -110,7 +111,7 @@ const OrgSettings = () => {
         <FormField
           control={form.control}
           name='phoneNumber'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Office Phone</FormLabel>
@@ -126,9 +127,9 @@ const OrgSettings = () => {
         <FormField
           control={form.control}
           name='officeAddress'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
-            <FormItem className='col-span-2 xl:col-span-1'>
+            <FormItem className='col-span-2'>
               <FormLabel>Office Address</FormLabel>
               <FormControl>
                 <Textarea

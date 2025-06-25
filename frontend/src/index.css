@@ -129,6 +129,12 @@ button {
   @apply cursor-pointer;
 }
 
+input:disabled,
+textarea:disabled,
+.select-trigger:disabled {
+  @apply bg-gray-200 border border-black/30;
+}
+
 .table-item {
   @apply text-sm font-normal;
 }

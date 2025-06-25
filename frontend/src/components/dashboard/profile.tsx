@@ -17,7 +17,7 @@ import { useAuthContext } from '@/store/context';
 import { Textarea } from '../ui/textarea';
 
 const Profile = () => {
-  const [canEdit, setCanEdit] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const { data: user } = useAuthContext();
 
   const form = useForm<z.infer<typeof profileFormSchema>>({
@@ -33,7 +33,7 @@ const Profile = () => {
 
   function onSubmit(values: z.infer<typeof profileFormSchema>) {
     console.log(values);
-    setCanEdit(false);
+    setIsDisabled(true);
   }
 
   return (
@@ -46,14 +46,15 @@ const Profile = () => {
         <Button
           className='absolute -top-14 right-0 bg-black text-white hover:bg-black/55 hover:text-white lg:-top-20'
           variant={'outline'}
-          onClick={() => setCanEdit(true)}
+          type='button'
+          onClick={() => setIsDisabled(false)}
         >
           Edit Profile
         </Button>
 
         <FormField
           control={form.control}
-          disabled={!canEdit}
+          disabled={isDisabled}
           name='firstName'
           render={({ field }) => (
             <FormItem>
@@ -68,7 +69,7 @@ const Profile = () => {
         <FormField
           control={form.control}
           name='lastName'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Lastname</FormLabel>
@@ -100,7 +101,7 @@ const Profile = () => {
         <FormField
           control={form.control}
           name='phoneNumber'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
@@ -116,9 +117,9 @@ const Profile = () => {
         <FormField
           control={form.control}
           name='address'
-          disabled={!canEdit}
+          disabled={isDisabled}
           render={({ field }) => (
-            <FormItem className='col-span-2 xl:col-span-1'>
+            <FormItem className='col-span-2'>
               <FormLabel>Address</FormLabel>
 
               <FormControl>

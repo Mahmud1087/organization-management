@@ -3,26 +3,26 @@ import RejectLeaveModal from '@/components/modals/leave-request/reject-leave';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Table from '@/components/ui/tables/table';
-import { ROLES } from '@/config/constants';
+// import { ROLES } from '@/config/constants';
 import { useLeaveReqData } from '@/data/leave-data';
 import { useDebounce } from '@/hooks';
-import { useAuthContext } from '@/store/context';
+// import { useAuthContext } from '@/store/context';
 import { Dropdown, Flex, type MenuProps } from 'antd';
 import { ListFilter, Search } from 'lucide-react';
 import { useState } from 'react';
 
 const LeaveRequestContainer = () => {
-  const { data: user } = useAuthContext();
+  // const { data: user } = useAuthContext();
 
   return (
     <div>
       <LeaveDetails />
       <RejectLeaveModal />
-      {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? (
-        <OwnerAdmin />
-      ) : (
-        <Staff />
-      )}
+      {/* {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? ( */}
+      <OwnerAdmin />
+      {/* ) : ( */}
+      {/* <Staff /> */}
+      {/* )} */}
     </div>
   );
 };
@@ -119,8 +119,8 @@ const OwnerAdmin = () => {
   );
 };
 
-const Staff = () => {
-  return <div>Leave Request</div>;
-};
+// const Staff = () => {
+//   return <div>Leave Request</div>;
+// };
 
 export default LeaveRequestContainer;

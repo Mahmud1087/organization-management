@@ -7,24 +7,30 @@ import { Flex } from 'antd';
 import { useState } from 'react';
 
 const SettingsContainer = () => {
-  const { data: user } = useAuthContext();
+  // const { data: user } = useAuthContext();
 
   return (
     <div>
-      {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? (
-        <OwnerAdmin />
-      ) : (
-        <Staff />
-      )}
+      {/* {user?.role === ROLES.Owner || user?.role === ROLES.Admin ? ( */}
+      <OwnerAdmin />
+      {/* ) : ( */}
+      {/* <Staff />
+      )} */}
     </div>
   );
 };
 
 type Tab = 'Personal Details' | 'Change Password' | 'Organization Details';
 const OwnerAdmin = () => {
+  const { data: user } = useAuthContext();
   const [tab, setTab] = useState<Tab>('Personal Details');
 
-  const tabs = ['Personal Details', 'Change Password', 'Organization Details'];
+  const tabs = [
+    'Personal Details',
+    'Change Password',
+    (user?.role === ROLES.Admin || user?.role === ROLES.Owner) &&
+      'Organization Details',
+  ];
 
   return (
     <>
@@ -50,7 +56,7 @@ const OwnerAdmin = () => {
               })}
             </Flex>
           </aside>
-          {/* <Divider type='vertical' className='hidden h-[inherit] lg:block' /> */}
+
           <hr className='h-[inherit] my-5 border-r' />
           <aside className='pb-8 w-full lg:py-8 lg:w-[75%]'>
             {tab === 'Personal Details' ? (
@@ -58,7 +64,8 @@ const OwnerAdmin = () => {
             ) : tab === 'Change Password' ? (
               <Security />
             ) : (
-              <OrgSettings />
+              user?.role === ROLES.Admin ||
+              (user?.role === ROLES.Owner && <OrgSettings />)
             )}
           </aside>
         </div>
@@ -67,8 +74,8 @@ const OwnerAdmin = () => {
   );
 };
 
-const Staff = () => {
-  return <div>Settings</div>;
-};
+// const Staff = () => {
+//   return <div>Settings</div>;
+// };
 
 export default SettingsContainer;
