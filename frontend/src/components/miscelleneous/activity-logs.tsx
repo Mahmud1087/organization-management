@@ -57,7 +57,11 @@ const ActivityLogs = () => {
           );
         })}
       </Flex> */}
-      <Flex vertical gap={12} className='lg:max-h-[15rem] lg:overflow-y-scroll'>
+      <Flex
+        vertical
+        gap={12}
+        className='lg:max-h-[14rem] lg:overflow-y-scroll no-scrollbar'
+      >
         {activityLog.map((activity, i) => {
           return (
             <React.Fragment key={i}>

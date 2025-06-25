@@ -11,7 +11,9 @@ const DashboardContainer = ({ children }: { children: React.ReactNode }) => {
         <div className='fixed top-0 left-0 z-50 bg-white w-full md:left-1/4 lg:left-[20%] md:w-3/4 lg:w-4/5'>
           <Navbar />
         </div>
-        <main className='bg-dashboard-bg px-4 relative pt-16'>{children}</main>
+        <main className='bg-dashboard-bg px-4 relative pt-20 md:pt-16'>
+          {children}
+        </main>
       </section>
     </div>
   );

@@ -51,26 +51,26 @@ const OverviewCards = () => {
     //   canView: [ROLES.Manager, ROLES.Employee],
     // },
     {
-      title: 'Yearly leave',
+      title: 'Total yearly leave',
       icon: <FileStack className='size-5' />,
       value: 5,
       canView: [ROLES.Employee, ROLES.Manager],
       bg: '',
     },
     {
-      title: 'Total leaves taken',
+      title: 'Leaves taken this year',
       icon: <FileCheck2 className='size-5' />,
       value: 5,
       canView: [ROLES.Employee, ROLES.Manager],
       bg: 'success',
     },
-    {
-      title: 'Last 6 month',
-      icon: <FileClock className='size-5' />,
-      value: 5,
-      canView: [ROLES.Employee, ROLES.Manager],
-      bg: '',
-    },
+    // {
+    //   title: 'Leaves taken 6 month',
+    //   icon: <FileClock className='size-5' />,
+    //   value: 5,
+    //   canView: [ROLES.Employee, ROLES.Manager],
+    //   bg: '',
+    // },
     {
       title: 'Pending Leave',
       icon: <FileClock className='size-5' />,
@@ -82,7 +82,7 @@ const OverviewCards = () => {
 
   return (
     <>
-      <section className='grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+      <section className='gap-3 flex overflow-x-scroll no-scrollbar xl:grid xl:grid-cols-3'>
         {cardData.map(({ canView, icon, title, bg, value }, index) => {
           return (
             <Card
@@ -92,7 +92,7 @@ const OverviewCards = () => {
                 canView.includes(user?.role as string) ? 'block' : 'hidden'
               )}
             >
-              <Flex align='center' gap={20} className=''>
+              <Flex align='center' gap={20} className='w-56 md:w-52'>
                 <div
                   className={cn(
                     'h-11 w-11 group-first:bg-primary group-first:text-white rounded-full flex items-center justify-center',
